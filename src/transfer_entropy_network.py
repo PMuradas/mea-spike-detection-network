@@ -34,9 +34,8 @@ from statsmodels.stats.multitest import fdrcorrection
 from tqdm.auto import tqdm
 
 
-# --------------------------------------------------------------------------- #
-# Data
-# --------------------------------------------------------------------------- #
+
+#Data
 def load_spikes(path) -> pd.DataFrame:
     return pd.read_csv(path, usecols=["channel", "time"])
 
@@ -76,9 +75,9 @@ def plot_raster(matrix, channel_ids, fs_target, out_path):
     plt.close(fig)
 
 
-# --------------------------------------------------------------------------- #
-# Transfer entropy
-# --------------------------------------------------------------------------- #
+
+#Transfer entropy
+
 def compute_pair_te(i, j, spike_matrix, k, n_surrogates, seed):
     """TE from channel i to channel j and its surrogate-based p-value.
 
@@ -131,9 +130,8 @@ def compute_te_network(spike_matrix, k=1, n_surrogates=300, alpha=0.05, n_jobs=-
     return te_raw, te_naive, te_fdr, p_values
 
 
-# --------------------------------------------------------------------------- #
-# Graph analysis
-# --------------------------------------------------------------------------- #
+
+#Graph analysis
 def graph_metrics(G: nx.DiGraph) -> dict:
     """Topology metrics of a directed graph."""
     largest_scc = max(nx.strongly_connected_components(G), key=len)
@@ -176,9 +174,9 @@ def compare_with_null_models(G: nx.DiGraph, n_null=2000, seed=42) -> pd.DataFram
     return pd.DataFrame(rows)
 
 
-# --------------------------------------------------------------------------- #
-# Main
-# --------------------------------------------------------------------------- #
+
+#Main
+
 def parse_args():
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--spikes", required=True, help="Spike CSV produced by detect_spikes.py")
@@ -202,7 +200,7 @@ def main():
     out_dir.mkdir(parents=True, exist_ok=True)
     prefix = Path(args.spikes).stem.replace("_spikes", "")
 
-    # 1. Spike matrix -----------------------------------------------------------
+    #Spike matrix
     spike_df = load_spikes(args.spikes)
     matrix, channel_ids, n_spikes = build_binned_spike_matrix(
         spike_df, args.fs_original, args.fs_target, args.max_channels)
@@ -216,7 +214,7 @@ def main():
     print(f"Mean firing rate per channel: {n_binned / duration_s / n_channels:.3f} Hz")
     plot_raster(matrix, channel_ids, args.fs_target, out_dir / f"{prefix}_raster_binned.png")
 
-    # 2. Transfer entropy -------------------------------------------------------
+    #Transfer entropy
     te_raw, te_naive, te_fdr, p_values = compute_te_network(
         matrix, k=args.k, n_surrogates=args.n_surrogates,
         alpha=args.alpha, n_jobs=args.n_jobs, seed=args.seed)
@@ -239,7 +237,7 @@ def main():
         return
     print(f"Mean TE of significant edges: {te_fdr[te_fdr > 0].mean():.6f}")
 
-    # 3. Graph analysis -----------------------------------------------------------
+    #Graph analysis
     G = nx.from_numpy_array(te_fdr, create_using=nx.DiGraph)
     print(f"Graph | nodes: {G.number_of_nodes()} | edges: {G.number_of_edges()}")
 
