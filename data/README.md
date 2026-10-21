@@ -1,17 +1,13 @@
 # Data
 
-The raw recording is **not** stored in this repository because of its size (GitHub rejects files above 100 MB).
+Recordings are **not** stored in this repository because of their size (GitHub rejects files above 100 MB).
 
-| File | Size | Description |
-|------|------|-------------|
-| `Slc01_20min-4AP_240425.brw` | 33.33 GB | 20-minute high-density MEA recording (3Brain BioCam, 4096 electrodes, 7062 Hz) |
+## Using your own recording
 
-**Download:** `[ADD DOWNLOAD LINK HERE]`
-
-After downloading, place the file in this folder:
+The pipeline works with any BioCam `.brw` file. Place it in this folder and run:
 
 ```
-data/Slc01_20min-4AP_240425.brw
+python src/detect_spikes.py --brw data/<your_recording>.brw --out-dir outputs
 ```
 
-Files in `data/` (except this README) are ignored by Git, so the recording will never be committed by accident.
+Files in `data/` (except this README) are ignored by Git, so recordings will never be committed by accident.
