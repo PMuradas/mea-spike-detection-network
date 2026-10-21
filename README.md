@@ -50,8 +50,9 @@ The MIT license of this repository applies only to the code in this repository, 
 Python 3.9 or newer is recommended.
 
 ```bash
-git clone https://github.com/<your-user>/mea-transfer-entropy-network.git
-cd mea-transfer-entropy-network
+git clone https://github.com/PMuradas/mea-spike-detection-network
+.git
+cd mea-spike-detection-network
 
 python -m venv .venv
 source .venv/bin/activate        # Windows: .venv\Scripts\activate
@@ -129,7 +130,7 @@ Written to `outputs/` (not versioned):
 
 ## Author
 
-Pedro Santos Rosa Muradas, Federal University of ABC (UFABC).
+Pedro Santos Rosa Muradas
 
 ## License
 
