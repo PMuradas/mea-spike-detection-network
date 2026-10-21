@@ -20,18 +20,15 @@ from pathlib import Path
 
 import matplotlib
 
-matplotlib.use("Agg")  # figures are saved to disk, no display needed
+matplotlib.use("Agg")  #figures are saved to disk, no display needed
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-BIOCAM_FS_HZ = 7062.0  # BioCam sampling rate
-N_CHANNELS = 4096      # BioCam electrodes
+BIOCAM_FS_HZ = 7062.0  #BioCam sampling rate
+N_CHANNELS = 4096      #BioCam electrodes
 
 
-# --------------------------------------------------------------------------- #
-# Helpers
-# --------------------------------------------------------------------------- #
 def find_noisy_channels(probe, t_start: int, t_end: int, std_threshold: float) -> list:
     """Channels whose signal std (in a short segment) exceeds `std_threshold`."""
     n_samples = t_end - t_start
@@ -106,9 +103,9 @@ def plot_example_waveforms(spikes, n_channels, max_waveforms, out_path, seed=0):
     plt.close(fig)
 
 
-# --------------------------------------------------------------------------- #
-# Main
-# --------------------------------------------------------------------------- #
+
+#Main
+
 def parse_args():
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--brw", required=True, help="Path to the BioCam recording (.brw)")
@@ -137,7 +134,7 @@ def parse_args():
 def main():
     args = parse_args()
 
-    # HerdingSpikes is imported here so the helpers above work without it installed
+    #HerdingSpikes is imported here so the helpers above work without it installed
     from herdingspikes.hs2 import HSDetection
     from herdingspikes.probe import BioCam
 
@@ -148,7 +145,7 @@ def main():
     out_dir.mkdir(parents=True, exist_ok=True)
     base = brw_file.stem
 
-    # 1. Masked channels -----------------------------------------------------
+    #Masked channels 
     probe = BioCam(str(brw_file))
     print(f"Recording: {brw_file} | channels: {probe.num_channels}")
 
@@ -163,7 +160,7 @@ def main():
 
     probe = BioCam(str(brw_file), masked_channels=masked)
 
-    # 2. Detection -------------------------------------------------------------
+    #Detection
     detector = HSDetection(
         probe,
         num_com_centers=1,
@@ -185,7 +182,7 @@ def main():
     spikes = detector.spikes
     print(f"Spikes detected: {len(spikes)}")
 
-    # 3. Export and quality control ------------------------------------------
+    #Export and quality control
     df = spikes_to_dataframe(spikes, save_waveforms=args.save_waveforms)
     csv_path = out_dir / f"{base}_spikes.csv"
     df.to_csv(csv_path, index=False)
