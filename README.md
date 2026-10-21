@@ -50,9 +50,8 @@ The MIT license of this repository applies only to the code in this repository, 
 Python 3.9 or newer is recommended.
 
 ```bash
-git clone https://github.com/PMuradas/mea-spike-detection-network
-.git
-cd mea-spike-detection-network
+git clone https://github.com/<your-user>/mea-transfer-entropy-network.git
+cd mea-transfer-entropy-network
 
 python -m venv .venv
 source .venv/bin/activate        # Windows: .venv\Scripts\activate
@@ -67,7 +66,9 @@ pip install herdingspikes==0.3.100 --no-build-isolation
 
 ## Data
 
-The example recording `Slc01_20min-4AP_240425.brw` (**33.33 GB**) is not included in this repository. See [`data/README.md`](data/README.md) for the download link and where to place it.
+The example recording `Slc01_20min-4AP_240425.brw` (**33.33 GB**) is not included in this repository, and it is not hosted online because of its size. To request access to it, please open an issue in this repository.
+
+The pipeline also works with any other 3Brain BioCam `.brw` recording: place the file in `data/` and pass its path with `--brw`. See [`data/README.md`](data/README.md) for details.
 
 ## Usage
 
