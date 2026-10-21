@@ -1,0 +1,4 @@
+# Step 1 (spike detection). HerdingSpikes needs a C++ compiler and must be installed with:
+#   pip install numpy cython
+#   pip install herdingspikes==0.3.100 --no-build-isolation
+herdingspikes==0.3.100

@@ -1,0 +1,9 @@
+# Step 2 (transfer entropy network analysis) and plotting
+numpy
+pandas
+matplotlib
+networkx
+joblib>=1.3
+tqdm
+pyinform
+statsmodels
